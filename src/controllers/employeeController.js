@@ -1,29 +1,8 @@
 import connection from "../config/database.js";
 
 export const getAllEmployee = async (req, res) => {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-
-  if (!token) return res.sendStatus(401);
-
   try {
-    const sessionResult = await connection.query(
-      `
-      SELECT
-        *
-      FROM
-        sessions
-      WHERE
-        token = $1
-    `,
-      [token]
-    );
-
-    const session = sessionResult.rows[0];
-
-    if (!session) return res.sendStatus(401);
-
-    console.log(session);
+    const { company } = req;
 
     const employeesResult = await connection.query(
       `
@@ -34,7 +13,7 @@ export const getAllEmployee = async (req, res) => {
       WHERE
         company_id = $1
     ;`,
-      [session.company_id]
+      [company.id]
     );
 
     const employees = employeesResult.rows;
@@ -56,29 +35,10 @@ export const getAllEmployee = async (req, res) => {
 // }
 
 export const insertOneEmployee = async (req, res) => {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-
-  if (!token) return res.sendStatus(401);
-
   try {
-    const sessionResult = await connection.query(
-      `
-      SELECT
-        *
-      FROM
-        sessions
-      WHERE
-        token = $1        
-    ;`,
-      [token]
-    );
+    const { company } = req;
 
-    const session = sessionResult.rows[0];
-
-    if (!session) return res.sendStatus(401);
-
-    const company_id = session.company_id;
+    const company_id = company.id;
 
     const { name, number_phone, salary, pix_key, pix_type, department } =
       req.employee;
@@ -101,31 +61,11 @@ export const insertOneEmployee = async (req, res) => {
 };
 
 export const deleteEmployee = async (req, res) => {
-  const { authorization } = req.headers;
-  const token = authorization?.replace("Bearer ", "");
-
-  if (!token) return res.sendStatus(401);
-
   try {
-    const sessionResult = await connection.query(
-      `
-      SELECT
-        *
-      FROM
-        sessions
-      WHERE
-        token = $1
-    ;`,
-      [token]
-    );
-
-    const session = sessionResult.rows[0];
-
-    if (!session) return res.sendStatus(401);
-
+    const { company } = req;
     const { employee } = req;
 
-    if (employee.company_id !== session.company_id) return res.sendStatus(401);
+    if (employee.company_id !== company.id) return res.sendStatus(401);
 
     const { id } = req.params;
     await connection.query(
