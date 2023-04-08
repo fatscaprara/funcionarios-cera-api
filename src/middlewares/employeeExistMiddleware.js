@@ -21,6 +21,7 @@ export const employeeExist = async (req, res, next) => {
 
     if (!employee) return res.sendStatus(404);
 
+    req.employee = employee;
     next();
   } catch (err) {
     console.log(err);
