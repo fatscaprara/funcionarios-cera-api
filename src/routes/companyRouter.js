@@ -1,9 +1,10 @@
 import express from "express";
 import { companyValidade } from "../middlewares/companyValidadeMiddleware.js";
-import { signUp } from "../controllers/authController.js";
+import { signIn, signUp } from "../controllers/authController.js";
 
 const router = express.Router();
-router.post("/companies", companyValidade, signUp);
+router.post("/sign-up", companyValidade, signUp);
+router.post("/sign-in", signIn);
 
 export default router;
 

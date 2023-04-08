@@ -11,8 +11,7 @@ export const getAllEmployee = async (req, res) => {
 
     res.send(rows);
   } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    return res.status(500).send(err);
   }
 };
 
@@ -42,8 +41,7 @@ export const insertOneEmployee = async (req, res) => {
 
     res.sendStatus(201);
   } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    return res.status(500).send(err);
   }
 };
 
@@ -64,7 +62,6 @@ export const deleteEmployee = async (req, res) => {
 
     res.sendStatus(200);
   } catch (err) {
-    console.log(err);
-    res.sendStatus(500);
+    return res.status(500).send(err);
   }
 };
