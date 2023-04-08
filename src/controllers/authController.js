@@ -26,9 +26,11 @@ export const signUp = async (req, res) => {
 };
 
 export const signIn = async (req, res) => {
+  console.log("a0");
   const { email, password } = req.body;
 
   if (!email || !password) return res.sendStatus(401);
+  console.log("a1");
 
   try {
     const { rows } = await connection.query(
@@ -63,8 +65,11 @@ export const signIn = async (req, res) => {
       [token, company.id]
     );
 
+    console.log("a2");
     res.send(token);
   } catch (err) {
+    console.log("a3");
+
     return res.status(500).send(err);
   }
 };
