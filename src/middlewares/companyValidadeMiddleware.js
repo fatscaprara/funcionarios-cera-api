@@ -8,7 +8,6 @@ export const companyValidade = async (req, res, next) => {
     return res.status(401).send(errors);
   }
 
-  console.log("passei pelo md");
   req.company = req.body;
   next();
 };

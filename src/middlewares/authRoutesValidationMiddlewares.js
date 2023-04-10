@@ -1,4 +1,3 @@
-import connection from "../config/database.js";
 import { findCompanyById } from "../repositories/companyRepository.js";
 import { findSessionByToken } from "../repositories/employeeRepository.js";
 
