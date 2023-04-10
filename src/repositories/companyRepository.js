@@ -1,3 +1,5 @@
+import connection from "../config/database.js";
+
 export const findCompanyById = async (id) => {
   const companyResult = await connection.query(
     `
