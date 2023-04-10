@@ -13,5 +13,6 @@ router.use(authRoutesValidation);
 router.get("/employees", getAllEmployee);
 router.post("/employees", employeeDataValidade, insertOneEmployee);
 router.delete("/employees/:id", employeeExist, deleteEmployee);
+router.update("/employees/:id", employeeExist, updateEmployee);
 
 export default router;

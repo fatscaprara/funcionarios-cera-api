@@ -1,7 +1,9 @@
+import connection from "../config/database.js";
 import {
   deleteEmployeeById,
   findEmployeeByCompanyId,
   insertEmployee,
+  updateEmployeeById,
 } from "../repositories/employeeRepository.js";
 
 export const getAllEmployee = async (req, res) => {
@@ -56,6 +58,28 @@ export const deleteEmployee = async (req, res) => {
     await deleteEmployeeById(id);
 
     res.sendStatus(200);
+  } catch (err) {
+    return res.status(500).send(err);
+  }
+};
+
+export const updateEmployee = async (req, res) => {
+  const { name, number_phone, salary, pix_key, pix_type, department } =
+    req.employee;
+
+  const { id } = req.params;
+  try {
+    await updateEmployeeById({
+      name,
+      number_phone,
+      salary,
+      pix_key,
+      pix_type,
+      department,
+      id,
+    });
+
+    res.sendStatus(201);
   } catch (err) {
     return res.status(500).send(err);
   }

@@ -79,3 +79,30 @@ export const deleteEmployeeById = async (id) => {
     [id]
   );
 };
+
+export const updateEmployeeById = async ({
+  name,
+  number_phone,
+  salary,
+  pix_key,
+  pix_type,
+  department,
+  id,
+}) => {
+  return await connection.query(
+    `
+    UPDATE
+      employees
+    SET
+      name = $1,
+      number_phone = $2,
+      salary = $3,
+      pix_key = $4,
+      pix_type = $5,
+      department = $6
+    WHERE
+      id = $7
+    ;`,
+    [name, number_phone, salary, pix_key, pix_type, department, id]
+  );
+};
