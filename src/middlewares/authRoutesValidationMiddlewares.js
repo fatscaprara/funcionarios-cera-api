@@ -1,4 +1,6 @@
 import connection from "../config/database.js";
+import { findCompanyById } from "../repositories/companyRepository.js";
+import { findSessionByToken } from "../repositories/employeeRepository.js";
 
 export const authRoutesValidation = async (req, res, next) => {
   const { authorization } = req.headers;
@@ -7,33 +9,13 @@ export const authRoutesValidation = async (req, res, next) => {
   if (!token) return res.sendStatus(401);
 
   try {
-    const sessionResult = await connection.query(
-      `
-      SELECT
-        *
-      FROM
-        sessions
-      WHERE
-        token = $1
-    `,
-      [token]
-    );
+    const sessionResult = await findSessionByToken(token);
 
     const session = sessionResult.rows[0];
 
     if (!session) return res.sendStatus(401);
 
-    const companyResult = await connection.query(
-      `
-        SELECT
-          *
-        FROM
-          companies
-        WHERE
-          id = $1
-    ;`,
-      [session.company_id]
-    );
+    const companyResult = await findCompanyById(session.company_id);
 
     const company = companyResult.rows[0];
 
