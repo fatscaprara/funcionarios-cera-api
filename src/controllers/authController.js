@@ -16,6 +16,7 @@ export const signUp = async (req, res) => {
 
     res.sendStatus(201);
   } catch (err) {
+    console.log(err);
     return res.status(500).send(err);
   }
 };
@@ -39,6 +40,7 @@ export const signIn = async (req, res) => {
 
     res.send(token);
   } catch (err) {
+    console.log(err);
     return res.status(500).send(err);
   }
 };

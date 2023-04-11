@@ -24,6 +24,7 @@ export const authRoutesValidation = async (req, res, next) => {
     req.company = company;
     next();
   } catch (err) {
+    console.log(err);
     return res.status(500).send(err);
   }
 };
