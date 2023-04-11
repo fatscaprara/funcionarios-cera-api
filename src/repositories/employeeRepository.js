@@ -35,11 +35,23 @@ export const findEmployeeByCompanyId = async (companyId) => {
   const employeeResult = await connection.query(
     `
     SELECT
-      *
+      e.name,
+      e.number_phone,
+      e.salary,
+      e.pix_type,
+      e.pix_key,
+      e.department,
+      e.is_sent,
+      e.nfe_is_send,
+      c.name as company
     FROM
-      employees
+      employees e
+    JOIN
+      companies c
+    ON
+      e.company_id = c.id
     WHERE
-      company_id = $1
+      e.company_id = $1
     ;
   `,
     [companyId]
